@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +12,18 @@ namespace Task4
         {
             List<string> folderPaths = new List<string>()
             {
-                 @"C:\Users\Evgeniy_Chernyshkov\Desktop\New folder",
-                 @"C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (3)",
-                 @"C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (4)"
+                 @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder",
+                 @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder (2)",
+                 @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder (3)"
             };
+            
+
+            List<FileSystemEventHandler> handlers = new List<FileSystemEventHandler>();
+            handlers.Add(WahtcherHandler.OnChanged);
+            handlers.Add(WahtcherHandler.MoveFile);
 
 
-            MyWatcher wathcer = new MyWatcher(folderPaths);
+            MyWatcher wathcer = new MyWatcher(folderPaths,handlers);
 
 
             var wathcers = wathcer.GetWatchers(folderPaths);
@@ -30,55 +34,6 @@ namespace Task4
 
             }
 
-        }
-
-    }
-
-
-
-    public static class WahtcherHandler
-    {
-        public static void OnChanged(object source, FileSystemEventArgs e)
-        {
-            Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
-        }
-    }
-
-    class MyWatcher
-    {
-        private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
-
-
-        public MyWatcher(List<string> folderPaths)
-        {
-            CreateWatchers(folderPaths);
-        }
-
-        private void CreateWatchers(List<string> folderPaths)
-        {
-
-            foreach (var folderPath in folderPaths)
-            {
-                FileSystemWatcher watcher = new FileSystemWatcher(folderPath);
-
-
-                watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-
-                watcher.Changed += WahtcherHandler.OnChanged;
-                watcher.Created += WahtcherHandler.OnChanged;
-                watcher.Deleted += WahtcherHandler.OnChanged;
-                watcher.Renamed += WahtcherHandler.OnChanged;
-
-                watcher.EnableRaisingEvents = true;
-
-                watchers.Add(watcher);
-
-            }
-        }
-
-        public List<FileSystemWatcher> GetWatchers(List<string> folderPaths)
-        {
-            return watchers;
         }
 
 
