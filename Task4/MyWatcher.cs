@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
+using Task4.Configuration;
+
 namespace Task4
 {
 
@@ -11,23 +13,22 @@ namespace Task4
         private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
 
 
-        public MyWatcher(List<string> folderPaths, List<FileSystemEventHandler> handlers)
+        public MyWatcher(ListenedFolderPathElementCollection folderPaths, List<FileSystemEventHandler> handlers)
         {
             CreateWatchers(folderPaths,handlers);
         }
 
         /// <summary>
-        /// Создает экземпляры <see cref="FileSystemWatcher"/> для каждой папки 
+        /// Создает экземпляры <see cref="FileSystemWatcher"/> для указаных папок
         /// </summary>
         /// <param name="folderPaths">Список путей к папкам для прослушивания</param>
         /// <param name="handlers">Список обработчиков</param>
-        private void CreateWatchers(List<string> folderPaths, List<FileSystemEventHandler> handlers)
+        private void CreateWatchers(ListenedFolderPathElementCollection folderPaths, List<FileSystemEventHandler> handlers)
         {
             
-            foreach (var folderPath in folderPaths)
+            foreach (ListenedFolderPathElement folderPath in folderPaths)
             {
-                FileSystemWatcher watcher = new FileSystemWatcher(folderPath);
-
+                FileSystemWatcher watcher = new FileSystemWatcher(folderPath.FolderPath);
 
                 watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
@@ -42,17 +43,8 @@ namespace Task4
                 watcher.EnableRaisingEvents = true;
 
                 watchers.Add(watcher);
-
+                
             }
-        }
-
-        
-
-        public List<FileSystemWatcher> GetWatchers(List<string> folderPaths)
-        {
-            return watchers;
-        }
-
-
+        }        
     }
 }

@@ -1,49 +1,53 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Globalization;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Text.RegularExpressions;
+using Task4.Configuration;
+
 namespace Task4
 {
-    public static class WahtcherHandler
+    public  class WahtcherHandler
     {
-        public static void OnChanged(object source, FileSystemEventArgs e)
+        public  void OnChanged(object source, FileSystemEventArgs e)
         {
-            Console.WriteLine("File: " + e.FullPath + " " + e.Name);
+            Console.WriteLine("File: " + e.FullPath);
+            Console.WriteLine(e.Name);
+            Console.WriteLine(DateTime.Now);
         }
 
-      
-
-
-
-        public static void MoveFile(object source, FileSystemEventArgs e)
+        public  void MoveFile(object source, FileSystemEventArgs e)
         {
-            string extention = Path.GetExtension(e.FullPath);                             
-                     
-            
-            switch (extention)
+            var d = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+
+            foreach (TemplateElement item in d.Templates)
             {
-                case ".txt":
-                    {
-
-                        string destinationFolderPath = @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Папка\TEXT\"+e.Name;
-
+                string destinationFolderPath = Path.Combine(item.DestinationFolder, e.Name);
+                
+                if (Regex.IsMatch(e.Name, item.NameTemplate))
+                {
+                                      
                         if (File.Exists(destinationFolderPath))
                         {
                             File.Delete(destinationFolderPath);
                         }
+
+                        File.Move(e.FullPath, destinationFolderPath + DateTime.Now.ToLongDateString());
                
+                                      
+                 
+                    //File.Delete(e.FullPath);
+                    return;
 
-                        File.Move(e.FullPath, destinationFolderPath);
-                        File.Delete(e.FullPath);                   
-                        
+                }
 
-                        break;
-                    }
-
-
-                default:
-                    break;
             }
+
+            Console.WriteLine("Шаблон не найден");
+
+
 
 
         }

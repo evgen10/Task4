@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Globalization;
 
 namespace UnitTests
 {
@@ -10,11 +11,8 @@ namespace UnitTests
         [TestMethod]
         public void TestMethod1()
         {
-            string p = @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder\Новый текстовый документ.txt";
-            DirectoryInfo directoryInfo = new DirectoryInfo(p);
+            string l = "ru-RU";
 
-            string extention = Path.GetExtension(p);
-        
             
 
 
