@@ -14,35 +14,25 @@ namespace Task4
     {
         static void Main(string[] args)
         {
-            //List<string> folderPaths = new List<string>()
-            //{
-            //     @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder",
-            //     @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder (2)",
-            //     @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\New folder (3)"
-            //};
+                        
 
+            var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+   
 
-            
-
-            var d = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
-            //d.Culture.Culture = "ru-RU";
-
-            var folderPaths = d.Paths;
+            var folderPaths = configuration.Paths;
           
+            
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(configuration.Culture.Culture);
 
-            //d.Culture.Culture = CultureInfo.GetCultureInfo("ru-Ru");
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(d.Culture.Culture);
 
-
-            WahtcherHandler wahtcherHandler = new WahtcherHandler();
+            WahtcherHandler wahtcherHandler = new WahtcherHandler(new ConsoleLoger());
 
             List<FileSystemEventHandler> handlers = new List<FileSystemEventHandler>();
             handlers.Add(wahtcherHandler.OnChanged);
             handlers.Add(wahtcherHandler.MoveFile);
 
 
-            MyWatcher wathcer = new MyWatcher(folderPaths, handlers);
-                     
+            MyWatcher wathcer = new MyWatcher(folderPaths, handlers);                     
 
          
             while (true)

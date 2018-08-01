@@ -50,6 +50,8 @@
     <Compile Include="Configuration\ListenedFolderPathElementCollection.cs" />
     <Compile Include="Configuration\TemplateElement.cs" />
     <Compile Include="Configuration\TemplateElementCollection.cs" />
+    <Compile Include="ConsoleLoger.cs" />
+    <Compile Include="ILoger.cs" />
     <Compile Include="MyWatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

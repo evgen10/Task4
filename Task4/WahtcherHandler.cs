@@ -9,47 +9,92 @@ using Task4.Configuration;
 
 namespace Task4
 {
-    public  class WahtcherHandler
+    public class WahtcherHandler
     {
-        public  void OnChanged(object source, FileSystemEventArgs e)
+
+        private ILoger loger;
+
+        public WahtcherHandler(ILoger loger)
+        {
+            this.loger = loger;
+        }
+
+        public void OnChanged(object source, FileSystemEventArgs e)
         {
             Console.WriteLine("File: " + e.FullPath);
             Console.WriteLine(e.Name);
             Console.WriteLine(DateTime.Now);
         }
 
-        public  void MoveFile(object source, FileSystemEventArgs e)
+        public void MoveFile(object source, FileSystemEventArgs e)
         {
             var d = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+            string defaultFolder = @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Папка";
+
 
             foreach (TemplateElement item in d.Templates)
             {
-                string destinationFolderPath = Path.Combine(item.DestinationFolder, e.Name);
-                
+                string destinationFolderPath = item.DestinationFolder;
+
                 if (Regex.IsMatch(e.Name, item.NameTemplate))
                 {
-                                      
-                        if (File.Exists(destinationFolderPath))
-                        {
-                            File.Delete(destinationFolderPath);
-                        }
-
-                        File.Move(e.FullPath, destinationFolderPath + DateTime.Now.ToLongDateString());
-               
-                                      
-                 
-                    //File.Delete(e.FullPath);
+                    MoveTo(e.FullPath, destinationFolderPath);
+                    loger.TemplateFound(true);
                     return;
+                }
+
+            }
+
+            loger.TemplateFound(false);
+            MoveTo(e.FullPath, defaultFolder);
+
+
+        }
+
+
+        private void MoveTo(string sourceFilePath, string newFilePath)
+        {
+
+            bool fileLocked = true;
+            int failureСounter = 0;
+            while (fileLocked)
+            {
+                try
+                {
+
+                    string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
+                    string extension = Path.GetExtension(sourceFilePath);
+
+                    int p = Directory.GetFiles(newFilePath).Length;
+
+                    string fullPath = Path.Combine(newFilePath, fileName + " (" + (p + 1) + ")" + extension);
+
+
+
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+
+
+                    if (File.Exists(sourceFilePath))
+                    {
+                        File.Move(sourceFilePath, fullPath);
+
+                    }
+
+                    fileLocked = false;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    failureСounter++;
 
                 }
 
             }
 
-            Console.WriteLine("Шаблон не найден");
-
-
-
-
         }
+
     }
 }

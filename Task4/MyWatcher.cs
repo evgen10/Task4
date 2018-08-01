@@ -36,7 +36,7 @@ namespace Task4
                 {
                     foreach (var item in handlers)
                     {
-                        watcher.Created += item;
+                        watcher.Created += item;                        
                     }
                 }                               
 
