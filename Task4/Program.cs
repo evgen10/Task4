@@ -14,25 +14,24 @@ namespace Task4
     {
         static void Main(string[] args)
         {
-                        
 
-            var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+            ConsoleLoger loger = new ConsoleLoger();
+            WahtcherHandler wahtcherHandler = new WahtcherHandler(loger);
+
+            var configuration = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");       
    
-
             var folderPaths = configuration.Paths;
           
             
             Thread.CurrentThread.CurrentCulture = new CultureInfo(configuration.Culture.Culture);
-
-
-            WahtcherHandler wahtcherHandler = new WahtcherHandler(new ConsoleLoger());
+            
 
             List<FileSystemEventHandler> handlers = new List<FileSystemEventHandler>();
             handlers.Add(wahtcherHandler.OnChanged);
             handlers.Add(wahtcherHandler.MoveFile);
 
 
-            MyWatcher wathcer = new MyWatcher(folderPaths, handlers);                     
+            MyWatcher wathcer = new MyWatcher(folderPaths, handlers, loger);                     
 
          
             while (true)

@@ -23,7 +23,17 @@ namespace Task4.Configuration
             get { return (string)this["destinationFolder"]; }
         }
 
+        [ConfigurationProperty("addCreationDate")]
+        public bool IsAddCreationDate
+        {
+            get{ return (bool)this["addCreationDate"];}
+        }
 
+        [ConfigurationProperty("addIndex")]
+        public bool IsAddIndex
+        {
+            get { return (bool)this["addIndex"]; }
+        }
 
     }
 }

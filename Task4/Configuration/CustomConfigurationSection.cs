@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Task4.Configuration
 {
-    public class CustomConfigurationSection: ConfigurationSection
+    public class CustomConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("culture")]
         public CultureElement Culture
@@ -16,6 +16,11 @@ namespace Task4.Configuration
             set { this["culture"] = value; }
         }
 
+        [ConfigurationProperty("defaultFolder")]
+        public DefaultFolderElement  DefaultFolder
+        {
+            get { return (DefaultFolderElement)this["defaultFolder"]; }
+        }
 
         [ConfigurationProperty("paths")]
         public ListenedFolderPathElementCollection Paths

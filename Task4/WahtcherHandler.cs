@@ -11,8 +11,7 @@ namespace Task4
 {
     public class WahtcherHandler
     {
-
-        private ILoger loger;
+        private readonly ILoger loger;
 
         public WahtcherHandler(ILoger loger)
         {
@@ -29,16 +28,18 @@ namespace Task4
         public void MoveFile(object source, FileSystemEventArgs e)
         {
             var d = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
-            string defaultFolder = @"C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Папка";
+            string defaultFolder = d.DefaultFolder.Path;
 
 
             foreach (TemplateElement item in d.Templates)
             {
-                string destinationFolderPath = item.DestinationFolder;
+                
 
                 if (Regex.IsMatch(e.Name, item.NameTemplate))
                 {
-                    MoveTo(e.FullPath, destinationFolderPath);
+                    string destinationPath = Method(e.FullPath, item);
+
+                    MoveTo(e.FullPath, destinationPath);
                     loger.TemplateFound(true);
                     return;
                 }
@@ -52,43 +53,79 @@ namespace Task4
         }
 
 
+
+        private string Method(string sourceFilePath, TemplateElement template)
+        {
+
+            string fullPath;
+
+            string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
+            string extension = Path.GetExtension(sourceFilePath);
+
+            if (template.IsAddCreationDate)
+            {
+                fileName = $"{fileName} ({DateTime.Now.ToShortDateString()})";
+            }
+
+            if (template.IsAddIndex)
+            {
+                int index = Directory.GetFiles(template.DestinationFolder).Length;
+                fileName = $"{fileName} ({index + 1})";
+            }
+                 
+            
+            fullPath = Path.Combine(template.DestinationFolder, $"{fileName}{extension}");
+
+            return fullPath;
+
+        }
+
+
         private void MoveTo(string sourceFilePath, string newFilePath)
         {
+            const int maxNumberFailure = 50;
 
             bool fileLocked = true;
             int failureСounter = 0;
+
             while (fileLocked)
             {
                 try
                 {
 
-                    string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
-                    string extension = Path.GetExtension(sourceFilePath);
+                   
+                    //string extension = Path.GetExtension(sourceFilePath);
 
-                    int p = Directory.GetFiles(newFilePath).Length;
-
-                    string fullPath = Path.Combine(newFilePath, fileName + " (" + (p + 1) + ")" + extension);
-
+                    //int index = Directory.GetFiles(newFilePath).Length;
+                    //string fullPath = Path.Combine(newFilePath, $"{fileName} ({index + 1}){extension}");
 
 
-                    if (File.Exists(fullPath))
+
+                    if (File.Exists(newFilePath))
                     {
-                        File.Delete(fullPath);
+                        File.Delete(newFilePath);
                     }
 
 
                     if (File.Exists(sourceFilePath))
                     {
-                        File.Move(sourceFilePath, fullPath);
+                        File.Move(sourceFilePath, newFilePath);
 
+                        string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
+                        loger.FileMoved(fileName, newFilePath);
                     }
 
                     fileLocked = false;
                 }
                 catch (IOException ex)
                 {
-                    Console.WriteLine(ex.Message);
                     failureСounter++;
+
+                    if (failureСounter == maxNumberFailure)
+                    {
+                        loger.Error(ex.Message);
+                        fileLocked = false;
+                    }
 
                 }
 

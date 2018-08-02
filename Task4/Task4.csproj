@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Configuration\CultureElement.cs" />
     <Compile Include="Configuration\CustomConfigurationSection.cs" />
+    <Compile Include="Configuration\DefaultFolderElement.cs" />
     <Compile Include="Configuration\ListenedFolderPathElement.cs" />
     <Compile Include="Configuration\ListenedFolderPathElementCollection.cs" />
     <Compile Include="Configuration\TemplateElement.cs" />
@@ -55,12 +56,10 @@
     <Compile Include="MyWatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Template.cs" />
     <Compile Include="WahtcherHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="User.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

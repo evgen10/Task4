@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System;
 
 using Task4.Configuration;
 
 namespace Task4
 {
 
-    
+
 
     class MyWatcher
     {
         private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
+        private readonly ILoger loger;
 
 
-        public MyWatcher(ListenedFolderPathElementCollection folderPaths, List<FileSystemEventHandler> handlers)
+        public MyWatcher(ListenedFolderPathElementCollection folderPaths, List<FileSystemEventHandler> handlers, ILoger loger)
         {
-            CreateWatchers(folderPaths,handlers);
+            this.loger = loger;
+            CreateWatchers(folderPaths, handlers);
+        
         }
 
         /// <summary>
@@ -25,26 +29,36 @@ namespace Task4
         /// <param name="handlers">Список обработчиков</param>
         private void CreateWatchers(ListenedFolderPathElementCollection folderPaths, List<FileSystemEventHandler> handlers)
         {
-            
-            foreach (ListenedFolderPathElement folderPath in folderPaths)
+            if (folderPaths!=null)
             {
-                FileSystemWatcher watcher = new FileSystemWatcher(folderPath.FolderPath);
-
-                watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-
-                if (handlers!=null)
+                foreach (ListenedFolderPathElement folderPath in folderPaths)
                 {
-                    foreach (var item in handlers)
+                    try
                     {
-                        watcher.Created += item;                        
+                        FileSystemWatcher watcher = new FileSystemWatcher(folderPath.FolderPath);
+
+                        watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+                        if (handlers != null)
+                        {
+                            foreach (var item in handlers)
+                            {
+                                watcher.Created += item;
+                            }
+                        }
+
+                        watcher.EnableRaisingEvents = true;
+
+                        watchers.Add(watcher);
                     }
-                }                               
-
-                watcher.EnableRaisingEvents = true;
-
-                watchers.Add(watcher);
+                    catch (ArgumentException e )
+                    {
+                        loger.Error(e.Message);                        
+                    }
                 
+
+                }
             }
-        }        
+        }
     }
 }

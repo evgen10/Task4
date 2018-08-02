@@ -11,6 +11,7 @@ namespace Task4
         void FileFound(string fullPath, string name);
         void FileMoved(string fileName, string directoryName);
         void TemplateFound(bool isFound);
+        void Error(string message);
 
     }
 }

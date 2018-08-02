@@ -8,9 +8,9 @@ using System.Globalization;
 
 namespace Task4.Configuration
 {
-    public class CultureElement: ConfigurationElement
+    public class CultureElement : ConfigurationElement
     {
-        [ConfigurationProperty("cultureProp")]   
+        [ConfigurationProperty("cultureProp")]
 
         public string Culture
         {

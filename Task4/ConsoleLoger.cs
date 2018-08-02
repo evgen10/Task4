@@ -15,7 +15,7 @@ namespace Task4
 
         public void FileMoved(string fileName, string directoryName)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"{fileName} moved to {directoryName}");
         }
 
         public void TemplateFound(bool isFound)
@@ -28,6 +28,12 @@ namespace Task4
             {
                 Console.WriteLine("Шаблон не найден");
             }
+        }
+
+
+        public void Error(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }
