@@ -33,28 +33,26 @@ namespace Task4
 
             foreach (TemplateElement item in d.Templates)
             {
-                
 
                 if (Regex.IsMatch(e.Name, item.NameTemplate))
                 {
-                    string destinationPath = Method(e.FullPath, item);
+                    string destinationPath = CreateNewPath(e.FullPath, item);
 
                     MoveTo(e.FullPath, destinationPath);
                     loger.TemplateFound(true);
                     return;
                 }
 
-            }
+            }            
 
             loger.TemplateFound(false);
-            MoveTo(e.FullPath, defaultFolder);
-
-
+            MoveTo(e.FullPath, Path.Combine(defaultFolder,e.Name));
+            
         }
 
 
 
-        private string Method(string sourceFilePath, TemplateElement template)
+        private string CreateNewPath(string sourceFilePath, TemplateElement template)
         {
 
             string fullPath;
@@ -64,7 +62,7 @@ namespace Task4
 
             if (template.IsAddCreationDate)
             {
-                fileName = $"{fileName} ({DateTime.Now.ToShortDateString()})";
+                fileName = $"{fileName} ({DateTime.Now.ToLongDateString()})";
             }
 
             if (template.IsAddIndex)
@@ -72,8 +70,8 @@ namespace Task4
                 int index = Directory.GetFiles(template.DestinationFolder).Length;
                 fileName = $"{fileName} ({index + 1})";
             }
-                 
-            
+
+
             fullPath = Path.Combine(template.DestinationFolder, $"{fileName}{extension}");
 
             return fullPath;
@@ -92,15 +90,6 @@ namespace Task4
             {
                 try
                 {
-
-                   
-                    //string extension = Path.GetExtension(sourceFilePath);
-
-                    //int index = Directory.GetFiles(newFilePath).Length;
-                    //string fullPath = Path.Combine(newFilePath, $"{fileName} ({index + 1}){extension}");
-
-
-
                     if (File.Exists(newFilePath))
                     {
                         File.Delete(newFilePath);
@@ -128,6 +117,7 @@ namespace Task4
                     }
 
                 }
+               
 
             }
 

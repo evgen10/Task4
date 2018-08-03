@@ -18,5 +18,9 @@ namespace Task4.Configuration
             set { this["cultureProp"] = value; }
         }
 
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
     }
 }
