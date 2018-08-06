@@ -1,39 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Task4.Resources;
 
 namespace Task4
 {
     public class ConsoleLoger : ILoger
-    {
-        public void FileFound(string fullPath, string name)
+    {        
+
+        public void PrintFileFound(string name)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
+            Console.WriteLine($"{Log.FoundFile} {name} ");
+            Console.WriteLine($"{Log.CreationDate} - {DateTime.Now.ToLongDateString()}");
         }
 
-        public void FileMoved(string fileName, string directoryName)
+        public void PrintFileMoved(string fileName, string directoryName)
         {
-            Console.WriteLine($"{fileName} moved to {directoryName}");
+            Console.WriteLine($"{fileName} {Log.Moved} {directoryName}");
         }
 
-        public void TemplateFound(bool isFound)
+        public void PrintTemplateFound(bool isFound)
         {
             if (isFound)
             {
-                Console.WriteLine("Шаблон найден");
+                Console.WriteLine(Log.TemplateFound);
+
             }
             else
             {
-                Console.WriteLine("Шаблон не найден");
+                Console.WriteLine(Log.TemplateNotFound);
             }
         }
 
-
-        public void Error(string message)
+        public void PrintError(string message)
         {
             Console.WriteLine(message);
         }
+
+
+
     }
 }

@@ -8,10 +8,10 @@ namespace Task4
 {
     public interface ILoger
     {
-        void FileFound(string fullPath, string name);
-        void FileMoved(string fileName, string directoryName);
-        void TemplateFound(bool isFound);
-        void Error(string message);
+        void PrintFileFound(string name);
+        void PrintFileMoved(string fileName, string directoryName);
+        void PrintTemplateFound(bool isFound);
+        void PrintError(string message);
 
     }
 }

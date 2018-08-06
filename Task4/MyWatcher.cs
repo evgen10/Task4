@@ -53,7 +53,7 @@ namespace Task4
                     }
                     catch (ArgumentException e )
                     {
-                        loger.Error(e.Message);                        
+                        loger.PrintError(e.Message);                        
                     }
                 
 

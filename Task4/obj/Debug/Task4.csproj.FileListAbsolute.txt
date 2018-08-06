@@ -16,4 +16,11 @@ C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.pdb
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\bin\Debug\Task4.exe
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\bin\Debug\Task4.pdb
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\bin\Debug\ru-Ru\Task4.resources.dll
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Menu.resources
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Menu.ru-Ru.resources
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.csproj.GenerateResource.Cache
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\ru-Ru\Task4.resources.dll
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Log.resources
+C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Log.ru-RU.resources
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.csprojResolveAssemblyReference.cache

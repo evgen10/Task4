@@ -18,20 +18,19 @@ namespace Task4
             this.loger = loger;
         }
 
-        public void OnChanged(object source, FileSystemEventArgs e)
+        public void OnFileFounded(object source, FileSystemEventArgs e)
         {
-            Console.WriteLine("File: " + e.FullPath);
-            Console.WriteLine(e.Name);
-            Console.WriteLine(DateTime.Now);
+            loger.PrintFileFound(e.Name);
         }
 
         public void MoveFile(object source, FileSystemEventArgs e)
         {
-            var d = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
-            string defaultFolder = d.DefaultFolder.Path;
+            var config = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
+
+            string defaultFolder = config.DefaultFolder.Path;
 
 
-            foreach (TemplateElement item in d.Templates)
+            foreach (TemplateElement item in config.Templates)
             {
 
                 if (Regex.IsMatch(e.Name, item.NameTemplate))
@@ -39,17 +38,19 @@ namespace Task4
                     string destinationPath = CreateNewPath(e.FullPath, item);
 
                     MoveTo(e.FullPath, destinationPath);
-                    loger.TemplateFound(true);
+                    loger.PrintTemplateFound(true);
+
                     return;
                 }
 
             }            
 
-            loger.TemplateFound(false);
-            MoveTo(e.FullPath, Path.Combine(defaultFolder,e.Name));
-            
-        }
+         
+          
+            MoveTo(e.FullPath, Path.Combine(defaultFolder,e.FullPath));
+            loger.PrintTemplateFound(false);
 
+        }
 
 
         private string CreateNewPath(string sourceFilePath, TemplateElement template)
@@ -101,7 +102,7 @@ namespace Task4
                         File.Move(sourceFilePath, newFilePath);
 
                         string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
-                        loger.FileMoved(fileName, newFilePath);
+                        loger.PrintFileMoved(fileName, newFilePath);
                     }
 
                     fileLocked = false;
@@ -112,12 +113,11 @@ namespace Task4
 
                     if (failureСounter == maxNumberFailure)
                     {
-                        loger.Error(ex.Message);
+                        loger.PrintError(ex.Message);
                         fileLocked = false;
                     }
 
-                }
-               
+                }               
 
             }
 
