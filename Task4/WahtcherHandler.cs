@@ -28,14 +28,14 @@ namespace Task4
             var config = (CustomConfigurationSection)ConfigurationManager.GetSection("customSection");
 
             string defaultFolder = config.DefaultFolder.Path;
+            string destinationPath;
 
 
             foreach (TemplateElement item in config.Templates)
             {
-
                 if (Regex.IsMatch(e.Name, item.NameTemplate))
                 {
-                    string destinationPath = CreateNewPath(e.FullPath, item);
+                    destinationPath = CreateNewPath(e.FullPath, item.DestinationFolder, item.IsAddCreationDate, item.IsAddIndex);
 
                     MoveTo(e.FullPath, destinationPath);
                     loger.PrintTemplateFound(true);
@@ -43,37 +43,41 @@ namespace Task4
                     return;
                 }
 
-            }            
+            }
 
-         
-          
-            MoveTo(e.FullPath, Path.Combine(defaultFolder,e.FullPath));
+            destinationPath = CreateNewPath(e.FullPath, defaultFolder, true, true);
+
+            MoveTo(e.FullPath, destinationPath);
             loger.PrintTemplateFound(false);
 
         }
-
-
-        private string CreateNewPath(string sourceFilePath, TemplateElement template)
+           
+        private string CreateNewPath(string sourceFilePath, string destinationFolder, bool isAddDate, bool isAddIndex)
         {
 
-            string fullPath;
+            int index=0;
 
             string fileName = Path.GetFileNameWithoutExtension(sourceFilePath);
             string extension = Path.GetExtension(sourceFilePath);
+            string fullPath = Path.Combine(destinationFolder,Path.GetFileName(sourceFilePath));
 
-            if (template.IsAddCreationDate)
+            string newFileName="";
+
+            if (isAddDate)
             {
                 fileName = $"{fileName} ({DateTime.Now.ToLongDateString()})";
             }
-
-            if (template.IsAddIndex)
-            {
-                int index = Directory.GetFiles(template.DestinationFolder).Length;
-                fileName = $"{fileName} ({index + 1})";
+            
+            while (File.Exists(fullPath))
+            {              
+                if (isAddIndex)
+                {
+                    newFileName = $"{fileName} ({index + 1})";
+                }
+                
+                fullPath = Path.Combine(destinationFolder, $"{newFileName}{extension}");
+                index++;
             }
-
-
-            fullPath = Path.Combine(template.DestinationFolder, $"{fileName}{extension}");
 
             return fullPath;
 
@@ -96,7 +100,6 @@ namespace Task4
                         File.Delete(newFilePath);
                     }
 
-
                     if (File.Exists(sourceFilePath))
                     {
                         File.Move(sourceFilePath, newFilePath);
@@ -117,7 +120,7 @@ namespace Task4
                         fileLocked = false;
                     }
 
-                }               
+                }
 
             }
 
