@@ -11,7 +11,9 @@ namespace Task4
 
     class MyWatcher
     {
+        
         private List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
+
         private readonly ILoger loger;
 
 
@@ -39,6 +41,7 @@ namespace Task4
 
                         watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
+                        //определяем обработчики события создания файла
                         if (handlers != null)
                         {
                             foreach (var item in handlers)

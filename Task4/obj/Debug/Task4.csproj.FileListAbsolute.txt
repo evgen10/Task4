@@ -7,7 +7,6 @@ D:\Tasks\Code\Task4\Task4\obj\Debug\Task4.pdb
 C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Task4.exe.config
 C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Task4.exe
 C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\Task4.pdb
-C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.csprojResolveAssemblyReference.cache
 C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.csproj.CoreCompileInputs.cache
 C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.exe
 C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.pdb
@@ -24,3 +23,11 @@ C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\ru-Ru\
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Log.resources
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.Resources.Log.ru-RU.resources
 C:\Users\Evgeniy_Chernyshkov\Desktop\New folder (5)\Task4\Task4\obj\Debug\Task4.csprojResolveAssemblyReference.cache
+C:\Users\iammr\Desktop\Task4\Task4\bin\Debug\ru-RU\Task4.resources.dll
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.csprojAssemblyReference.cache
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.Resources.Log.resources
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.Resources.Menu.resources
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.Resources.Log.ru-RU.resources
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.Resources.Menu.ru-Ru.resources
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\Task4.csproj.GenerateResource.cache
+C:\Users\iammr\Desktop\Task4\Task4\obj\Debug\ru-RU\Task4.resources.dll

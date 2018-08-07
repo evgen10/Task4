@@ -30,19 +30,17 @@ namespace Task4
 
             ConsoleLoger loger = new ConsoleLoger();
             WahtcherHandler wahtcherHandler = new WahtcherHandler(loger);
-
             
 
-            List<FileSystemEventHandler> handlers = new List<FileSystemEventHandler>();
-            handlers.Add(wahtcherHandler.OnFileFounded);
-            handlers.Add(wahtcherHandler.MoveFile);
-
+            List<FileSystemEventHandler> handlers = new List<FileSystemEventHandler>
+            {
+                wahtcherHandler.OnFileFound,
+                wahtcherHandler.MoveFile
+            };
 
             MyWatcher wathcer = new MyWatcher(listenedFolders, handlers, loger);
 
-            ShowListeningFolders();         
-
-
+            ShowListeningFolders();    
 
             while (true)
             {
@@ -71,17 +69,16 @@ namespace Task4
         
         private static void SetLanguage()
         {
-
             var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var configuration = (CustomConfigurationSection)configFile.Sections["customSection"];    
+            var configuration = (CustomConfigurationSection)configFile.Sections["customSection"];   
 
             configuration.Culture.Culture = LanguageMenu();
 
             configFile.AppSettings.SectionInformation.ForceSave = true;
             configFile.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
-
         }        
+
 
         private static string LanguageMenu()
         {
@@ -101,7 +98,6 @@ namespace Task4
                     return "en-US";
                 }
 
-
                 Console.WriteLine(Resources.Menu.InvalidInput);
             }
 
@@ -112,12 +108,10 @@ namespace Task4
         {
             while (true)
             {
-
                 Console.WriteLine($"{Resources.Menu.Press} 1 {Resources.Menu.ChangeLanguage}");
                 Console.WriteLine($"{Resources.Menu.Press} 2 {Resources.Menu.Continue}");
 
                 string key = Console.ReadLine();
-
 
                 if (key == "1")
                 {
@@ -129,7 +123,6 @@ namespace Task4
                     return;
                 }
 
-
                 Console.WriteLine(Resources.Menu.InvalidInput);
 
             }
@@ -140,9 +133,8 @@ namespace Task4
         {
             Console.Clear();
             Console.WriteLine($"{Resources.Menu.ListeningStarted}.");
-
-
             Console.WriteLine($"{Resources.Menu.FoldersForListening}:");
+
             foreach (ListenedFolderPathElement item in listenedFolders)
             {
                 Console.WriteLine(item.FolderPath);              

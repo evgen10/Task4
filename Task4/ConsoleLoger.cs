@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Task4.Resources;
 
 namespace Task4
-{
+{    
     public class ConsoleLoger : ILoger
     {        
 
@@ -28,13 +28,13 @@ namespace Task4
         {
             if (isFound)
             {
-                Console.WriteLine(Log.TemplateFound);
-
+                Console.WriteLine(Log.TemplateNotFound);
             }
             else
             {
                 Console.WriteLine(Log.TemplateNotFound);
             }
+
         }
 
         public void PrintError(string message)
