@@ -41,6 +41,9 @@ namespace Task4
                     //получаем путь к файлу с изменённым именем 
                     destinationPath = CreateNewPath(e.FullPath, item.DestinationFolder, item.IsAddCreationDate, item.IsAddIndex);
 
+                    //создаем папку для перемещения новго файла
+                    CreateDirectory(item.DestinationFolder);
+
                     //перемещаем появившийся  в прослушиваемой папке файл в назначенную шаблонам папку
                     MoveTo(e.FullPath, destinationPath);
 
@@ -52,14 +55,27 @@ namespace Task4
 
             }
 
+
+            CreateDirectory(defaultFolder);
+
             //если подходящего шаблона не найдено
-            //создаем новый путь с папкой по умолчанию
+            //создаем новый путь с папкой по умолчанию     
+
             destinationPath = CreateNewPath(e.FullPath, defaultFolder, true, true);
 
             MoveTo(e.FullPath, destinationPath);
             //уведомляем о том, что шаблон не найден
             loger.PrintTemplateFound(false);
 
+        }
+
+        //создает папку если ее не существует
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
 
         //создает новый путь к файлу с изменённым именем

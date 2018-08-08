@@ -62,9 +62,22 @@ namespace Task4
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
+            CreateDirectory(configuration.Paths);
+
             listenedFolders = configuration.Paths;
 
 
+        }
+
+        private static void CreateDirectory(ListenedFolderPathElementCollection folders)
+        {
+            foreach (ListenedFolderPathElement folder in folders)
+            {
+                if (!Directory.Exists(folder.FolderPath))
+                {
+                    Directory.CreateDirectory(folder.FolderPath);
+                }
+            }
         }
         
         private static void SetLanguage()
